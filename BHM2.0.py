@@ -153,33 +153,8 @@ alerts["Action"] = np.where(alerts["Risk"]>70,"🔴 Evacuation",
                      np.where(alerts["Risk"]>40,"🟡 Warning","🟢 Monitoring"))
 st.dataframe(alerts, use_container_width=True)
 
-# -------------------- MANUAL ALERT --------------------
-st.subheader("📢 Trigger Manual Alert")
-if st.button("🚨 SEND ALERT NOW"):
-    st.success("✅ Alert sent to all registered numbers! (Simulated in demo mode)")
-
-# -------------------- FORECAST --------------------
-st.subheader("🔮 Forecast (Next 6 Hours)")
-hours = [f"{i}h" for i in range(1,7)]
-forecast = np.random.randint(20,95,size=6)
-df_forecast = pd.DataFrame({"Hour":hours,"Forecast Risk %":forecast})
-fig_forecast = px.bar(df_forecast, x="Hour", y="Forecast Risk %",
-                      color="Forecast Risk %", title="Predicted Risk Probability",
-                      color_continuous_scale="turbo")
-fig_forecast.update_layout(template="plotly_dark",
-                           plot_bgcolor="#0d1117", paper_bgcolor="#0d1117")
-st.plotly_chart(fig_forecast, use_container_width=True)
-
-# -------------------- AUTO REFRESH --------------------
-st_autorefresh(interval=60 * 1000, key="auto_refresh")
-
-# -------------------- FOOTER --------------------
-st.markdown("---")
-st.markdown("🧠 *BHOOMI Safety Core v3.1* | Live + CSV + Alerts + Forecast + Heatmap | TEAM BHOOMI ⚡")
 # -------------------- RISK DISTRIBUTION BAR --------------------
 st.subheader("📊 Risk Distribution (High vs Low)")
-
-# Classify risks
 df["Risk_Level"] = np.where(df["Risk"] > 70, "High Risk",
                      np.where(df["Risk"] > 40, "Medium Risk", "Low Risk"))
 
@@ -206,3 +181,28 @@ fig_risk_bar.update_layout(
     paper_bgcolor="#0d1117"
 )
 st.plotly_chart(fig_risk_bar, use_container_width=True)
+
+# -------------------- MANUAL ALERT --------------------
+st.subheader("📢 Trigger Manual Alert")
+if st.button("🚨 SEND ALERT NOW"):
+    st.success("✅ Alert sent to all registered numbers! (Simulated in demo mode)")
+
+# -------------------- FORECAST --------------------
+st.subheader("🔮 Forecast (Next 6 Hours)")
+hours = [f"{i}h" for i in range(1,7)]
+forecast = np.random.randint(20,95,size=6)
+df_forecast = pd.DataFrame({"Hour":hours,"Forecast Risk %":forecast})
+fig_forecast = px.bar(df_forecast, x="Hour", y="Forecast Risk %",
+                      color="Forecast Risk %", title="Predicted Risk Probability",
+                      color_continuous_scale="turbo")
+fig_forecast.update_layout(template="plotly_dark",
+                           plot_bgcolor="#0d1117", paper_bgcolor="#0d1117")
+st.plotly_chart(fig_forecast, use_container_width=True)
+
+# -------------------- AUTO REFRESH --------------------
+st_autorefresh(interval=60 * 1000, key="auto_refresh")
+
+# -------------------- FOOTER --------------------
+st.markdown("---")
+st.markdown("🧠 *BHOOMI Safety Core v3.1* | Live + CSV + Alerts + Forecast + Heatmap | TEAM BHOOMI ⚡")
+
